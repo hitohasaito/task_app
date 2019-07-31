@@ -1,7 +1,7 @@
 Userモデル
 
 | カラム名 | データ型 |
-| :----- | :----- |
+| :----- | :---- |
 |  name  |  string  |
 |  email  |  string  |
 | password_digest | string |

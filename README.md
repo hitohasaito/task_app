@@ -1,7 +1,7 @@
 Userモデル
 
 | カラム名 | データ型 |
-| :--- | :--- | :--- |
+| :----- | :----- |
 |  name  |  string  |
 |  email  |  string  |
 | password_digest | string |
@@ -9,7 +9,7 @@ Userモデル
 taskモデル
 
 | カラム名 | データ型 |
-| :--- | :--- | :--- |
+| :----- | :----- |
 | task_name | string |
 | task_body | text |
 | task_limit | datetime |
@@ -20,12 +20,12 @@ taskモデル
 labelモデル
 
 | カラム名 | データ型 |
-| :--- | :--- | :--- |
+| :--- | :--- |
 | label_name | string |
 
 labellingモデル
 
 | カラム名 | データ型 |
-| :--- | :--- | :--- |
+| :--- | :--- |
 | task_id | integer |
 | label_id | integer |

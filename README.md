@@ -23,7 +23,7 @@ Labelモデル
 | :--- | :--- |
 | label_name | string |
 
-Labellingモデル
+ abellingモデル
 
 | カラム名 | データ型 |
 | :--- | :--- |

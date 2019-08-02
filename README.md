@@ -1,4 +1,4 @@
-Userモデル
+ Userモデル
 
 | カラム名 | データ型 |
 | :----- | :---- |
@@ -6,7 +6,7 @@ Userモデル
 |  email  |  string  |
 | password_digest | string |
 
-taskモデル
+Taskモデル
 
 | カラム名 | データ型 |
 | :----- | :----- |
@@ -17,13 +17,13 @@ taskモデル
 | task_priority | string |
 | user_id|integer |
 
-labelモデル
+Labelモデル
 
 | カラム名 | データ型 |
 | :--- | :--- |
 | label_name | string |
 
-labellingモデル
+Labellingモデル
 
 | カラム名 | データ型 |
 | :--- | :--- |

@@ -6,7 +6,7 @@
 |  email  |  string  |
 | password_digest | string |
 
-Taskモデル
+ Taskモデル
 
 | カラム名 | データ型 |
 | :----- | :----- |

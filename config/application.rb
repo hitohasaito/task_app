@@ -18,7 +18,8 @@ module TaskApp
     config.generators do |g|
       g.assets false
       g.helper false
-      g.test_framework false
+      g.test_framework falsez
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

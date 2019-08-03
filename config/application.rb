@@ -18,7 +18,7 @@ module TaskApp
     config.generators do |g|
       g.assets false
       g.helper false
-      g.test_framework falsez
+      g.test_framework false
     end
 
     # Settings in config/environments/* take precedence over those specified here.

@@ -1,0 +1,6 @@
+<h1>新規登録画面</h1>
+<%= form_with(model: @task, local:true) do |f| %>
+<%= f.label: task_name %>
+<%= f.text_field: task_body %>
+<% f.submit %>
+<% end %>

@@ -1,12 +1,2 @@
 <h1>新規登録画面</h1>
-<%= form_with(model: @task, local:true) do |f| %>
-<div class = "task">
-<%= f.label:task_name %>
-<%= f.text_field:task_name %>
-</div>
-<div class = "task">
-<%= f.label:task_body %>
-<%= f.text_field:task_body %>
-</div>
-<%= f.submit %>
-<% end %>
+<%= render "form" %>

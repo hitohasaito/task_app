@@ -7,6 +7,7 @@
     <td><%= task.task_name %></td>
     <td><%= task.task_body %></td>
     <td><%= link_to "詳細へ", task_path(task.id) %></td>
+    <td><%= link_to "編集へ", edit_task_path(task.id) %></td>
   </tr>
   <% end %>
 </table>

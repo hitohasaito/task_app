@@ -11,6 +11,9 @@ class TasksController < ApplicationController
       render "new"
     end
   end
+  def index
+    @tasks = Task.all
+  end
 
 private
 

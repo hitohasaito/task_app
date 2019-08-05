@@ -1,1 +1,11 @@
-index
+<h1>投稿一覧</h1>
+<table>
+  <th>タスク名</th>
+  <th>タスク詳細</th>
+  <% @tasks.each do |task| %>
+  <tr>
+    <td><%=task.task_name %></td>
+    <td><%=task.task_body %></td>
+  </tr>
+  <% end %>
+</table>

@@ -1,12 +1,13 @@
 class TasksController < ApplicationController
-  before_action :find_params,only:[:show,:edit,:update]
+  before_action :find_params,only:[:show, :edit, :update, :destroy]
   def new
     @task = Task.new
   end
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path
+      flash[:notice] = "新規登録しました"
+      redirect_to new_task_path
     else
       render "new"
     end
@@ -20,10 +21,16 @@ class TasksController < ApplicationController
   end
   def update
     if @task.update(task_params)
+      flash[:notice] = "編集しました"
       redirect_to tasks_path
     else
       render "edit"
     end
+  end
+  def destroy
+     @task.destroy
+     flash[:notice] = "削除しました"
+     redirect_to tasks_path
   end
 
 private

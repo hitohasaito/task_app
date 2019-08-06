@@ -1,3 +1,11 @@
 <h1>詳細</h1>
-<%= @task.task_name %>
-<%= @task.task_body %>
+<table>
+  <th>タスク名</th>
+  <th>タスク詳細</th>
+  <tr>
+    <td><%= @task.task_name %></td>
+    <td><%= @task.task_body %></td>
+  </tr>
+</table>
+<%= link_to "編集", edit_task_path(@task.id) %>
+<%= link_to "一覧", tasks_path %>

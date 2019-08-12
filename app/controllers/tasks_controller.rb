@@ -7,7 +7,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if @task.save
       flash[:notice] = "新規登録しました"
-      redirect_to new_task_path
+      redirect_to tasks_path
     else
       render "new"
     end

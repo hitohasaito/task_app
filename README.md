@@ -33,3 +33,18 @@ Labellingモデル
 | :--- | :--- |
 | task_id | integer |
 | label_id | integer |
+
+開発環境
+------------
+Ruby 2.6.3  
+Ruby on Rails 5.2.3  
+PostgreSQL 11.4  
+
+デプロイ手順
+------------
+1.heroku create（最初だけ）  
+2.rails assets:precompile RAILS_ENV=production  
+3.git add -A(またはファイル名)  
+4.git commit -m "コミットメッセージ"  
+5.git push heroku master  
+6.heroku run rails db:migrate

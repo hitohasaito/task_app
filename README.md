@@ -6,7 +6,9 @@ Userモデル
 |  email  |  string  |
 | password_digest | string |
 
-Taskモデル
+
+ Taskモデル
+
 
 | カラム名 | データ型 |
 | :----- | :----- |
@@ -23,7 +25,9 @@ Labelモデル
 | :--- | :--- |
 | label_name | string |
 
+
 Labellingモデル
+
 
 | カラム名 | データ型 |
 | :--- | :--- |

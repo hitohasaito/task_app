@@ -34,12 +34,14 @@ Labellingモデル
 | task_id | integer |
 | label_id | integer |
 
-#開発環境
+開発環境
+------------
 Ruby 2.6.3
 Ruby on Rails 5.2.3
 PostgreSQL 11.4
 
-#デプロイ手順
+デプロイ手順
+------------
 1.heroku create（最初だけ）
 2.git add -A(ファイル名)
 3.git commit -m "コミットメッセージ"

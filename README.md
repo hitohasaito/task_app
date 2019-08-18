@@ -42,8 +42,8 @@ PostgreSQL 11.4
 
 デプロイ手順
 ------------
-1.heroku create（最初だけ）
-2.ails assets:precompile RAILS_ENV=production  
+1.heroku create（最初だけ）  
+2.rails assets:precompile RAILS_ENV=production  
 3.git add -A(またはファイル名)  
 4.git commit -m "コミットメッセージ"  
 5.git push heroku master  

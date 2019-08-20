@@ -3,9 +3,9 @@ require 'rails_helper'
 
 RSpec.feature "タスク管理機能", type: :feature do
 background do
-   FactoryBot.create(:task ,created_at: Time.current+1.days)
-   FactoryBot.create(:second_task,created_at: Time.current+3.days)
-   FactoryBot.create(:third_task,created_at: Time.current+2.days)
+   FactoryBot.create(:task , created_at: DateTime.now+1.days, task_limit: DateTime.now+2.days)
+   FactoryBot.create(:second_task, created_at: DateTime.now+3.days, task_limit: DateTime.now+1.days)
+   FactoryBot.create(:third_task, created_at: DateTime.now+2.days, task_limit: DateTime.now+3.days)
   end
 
  scenario "タスク一覧のテスト" do
@@ -29,6 +29,7 @@ background do
 
    expect(page).to have_content "taskname1"
    expect(page).to have_content "tasktask1"
+#save_and_open_page
  end
 
  scenario "タスク詳細のテスト" do
@@ -45,8 +46,13 @@ background do
      expect(page).to have_content "tasktask2"
      expect(page).to have_content "tasktask3"
     end
-
      tasks{order(created_at: :desc)}
      #save_and_open_page
  end
+
+  scenario "終了期限でソートするを押すと、タスクが終了期限の昇順でソートされるかのテスト" do
+    visit tasks_path(sort_expired: "true")
+    expect(Task.order(:task_limit).map(&:id))
+#save_and_open_page
+  end
 end

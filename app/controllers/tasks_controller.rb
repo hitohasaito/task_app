@@ -13,7 +13,14 @@ class TasksController < ApplicationController
     end
   end
   def index
+    if params[:sort_expired]
+    @tasks = Task.all.order(:task_limit)
+    else
     @tasks = Task.all.order(created_at: :desc)
+    end
+    if params[:sort_createday]
+    @tasks = Task.all.order(created_at: :desc)
+    end
   end
   def show
   end
@@ -36,7 +43,7 @@ class TasksController < ApplicationController
 private
 
   def task_params
-    params.require(:task).permit(:task_name,:task_body)
+    params.require(:task).permit(:task_name, :task_body, :task_limit)
   end
   def find_params
     @task = Task.find(params[:id])

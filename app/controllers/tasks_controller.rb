@@ -18,6 +18,7 @@ class TasksController < ApplicationController
     else
     @tasks = Task.all.order(created_at: :desc)
     end
+
     if params[:sort_createday]
     @tasks = Task.all.order(created_at: :desc)
     end

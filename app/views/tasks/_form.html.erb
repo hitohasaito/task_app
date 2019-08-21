@@ -21,7 +21,8 @@
 <%= f.datetime_field:task_limit %>
 </div>
 <div class = "task">
-<%= f.hidden_field:task_status, value: "未着手" %>
+<%= f.label:task_status %>
+<%= f.select:task_status,["未着手","着手中","完了"]%>
 </div>
 <%= f.submit %>
 <% end %>

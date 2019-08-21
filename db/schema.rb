@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2019_08_20_132631) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "task_limit", default: "2019-08-18 18:18:46", null: false
-    t.integer "task_status"
+    t.string "task_status"
   end
 
 end

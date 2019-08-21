@@ -20,5 +20,8 @@
 <%= f.label:task_limit %>
 <%= f.datetime_field:task_limit %>
 </div>
+<div class = "task">
+<%= f.hidden_field:task_status, value: "未着手" %>
+</div>
 <%= f.submit %>
 <% end %>

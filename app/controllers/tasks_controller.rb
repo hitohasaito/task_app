@@ -13,16 +13,22 @@ class TasksController < ApplicationController
     end
   end
   def index
+    @task_new = Task.new
     if params[:sort_expired]
-    @tasks = Task.all.order(:task_limit)
+      @tasks = Task.all.order(:task_limit)
     else
-    @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.all.order(created_at: :desc)
     end
 
     if params[:sort_createday]
-    @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.all.order(created_at: :desc)
+    end
+    if params[:task]
+      @tasks = Task.search(params[:task])
+      #Taskはclassなので、searchメソッドはclassに対して使うメソッドとしてモデルに定義する必要がある
     end
   end
+
   def show
   end
   def edit

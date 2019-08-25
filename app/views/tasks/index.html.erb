@@ -2,10 +2,10 @@
   <p><%= flash[:notice] %></p>
   <p>検索</p>
 <%= form_with(model:Task.new, method: :get, local:true) do |f| %>
-  <%= f.label :task_name, "タスク名"%>
+  <%= f.label :task_name %>
   <%= f.text_field :task_name %>
 
-  <%= f.label :task_status, "ステータス"%>
+  <%= f.label :task_status %>
   <%= f.select :task_status, ["未着手","着手中","完了"],include_blank: true%>
 
   <%= f.submit "検索する"%>

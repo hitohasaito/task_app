@@ -23,9 +23,11 @@ class TasksController < ApplicationController
     if params[:sort_createday]
       @tasks = Task.all.order(created_at: :desc)
     end
+
     if params[:task]
-      @tasks = Task.search(params[:task])
-      #Taskはclassなので、searchメソッドはclassに対して使うメソッドとしてモデルに定義する必要がある
+      @tasks = Task.get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
+    else
+      Task.all.order(created_at: :desc)
     end
   end
 

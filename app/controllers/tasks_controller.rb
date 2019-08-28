@@ -13,15 +13,24 @@ class TasksController < ApplicationController
     end
   end
   def index
+    @task_new = Task.new
     if params[:sort_expired]
-    @tasks = Task.all.order(:task_limit)
+      @tasks = Task.all.order(:task_limit)
     else
-    @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.all.order(created_at: :desc)
     end
+
     if params[:sort_createday]
-    @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.all.order(created_at: :desc)
+    end
+
+    if params[:task]
+      @tasks = Task.get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
+    else
+      Task.all.order(created_at: :desc)
     end
   end
+
   def show
   end
   def edit
@@ -43,7 +52,7 @@ class TasksController < ApplicationController
 private
 
   def task_params
-    params.require(:task).permit(:task_name, :task_body, :task_limit)
+    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status)
   end
   def find_params
     @task = Task.find(params[:id])

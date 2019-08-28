@@ -20,5 +20,9 @@
 <%= f.label:task_limit %>
 <%= f.datetime_field:task_limit %>
 </div>
+<div class = "task">
+<%= f.label:task_status %>
+<%= f.select:task_status,["未着手","着手中","完了"]%>
+</div>
 <%= f.submit %>
 <% end %>

@@ -3,9 +3,9 @@ require 'rails_helper'
 
 RSpec.feature "タスク管理機能", type: :feature do
 background do
-   FactoryBot.create(:task , created_at: DateTime.now+1.days, task_limit: DateTime.now+2.days)
-   FactoryBot.create(:second_task, created_at: DateTime.now+3.days, task_limit: DateTime.now+1.days)
-   FactoryBot.create(:third_task, created_at: DateTime.now+2.days, task_limit: DateTime.now+3.days)
+   FactoryBot.create(:task)
+   FactoryBot.create(:second_task)
+   FactoryBot.create(:third_task)
   end
 
  scenario "タスク一覧のテスト" do
@@ -54,5 +54,40 @@ background do
     visit tasks_path(sort_expired: "true")
     expect(Task.order(:task_limit).map(&:id))
 #save_and_open_page
+  end
+
+  scenario "一覧画面の検索機能でタスク名を入力すると、入力した値を含む結果が表示されるかのテスト" do
+    visit tasks_path
+
+    fill_in "task[task_name]", with: "1"
+
+    click_button "検索する"
+
+    expect(page).to have_content "taskname1"
+#save_and_open_page
+  end
+
+  scenario "一覧画面の検索機能でステータス選択すると、選択したステータスに該当する結果が出るかのテスト" do
+    visit tasks_path
+
+    select "着手中",  from:"task_task_status"
+
+    click_button "検索する"
+
+    expect(page).to have_content "着手中"
+    #save_and_open_page
+  end
+
+  scenario "一覧画面の検索機能でタスク名とステータス両方値が入っていた場合、両方成り立つ結果を表示するかのテスト" do
+    visit tasks_path
+
+    fill_in "task[task_name]", with: "3"
+    select "着手中",  from:"task_task_status"
+
+    click_button "検索する"
+
+    expect(page).to have_content "taskname3"
+    expect(page).to have_content "着手中"
+
   end
 end

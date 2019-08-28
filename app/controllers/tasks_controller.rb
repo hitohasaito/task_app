@@ -24,6 +24,10 @@ class TasksController < ApplicationController
       @tasks = Task.all.order(created_at: :desc)
     end
 
+    if params[:sort_priority]
+      @tasks = Task.all.order(:task_priority)
+    end
+
     if params[:task]
       @tasks = Task.get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
     else

@@ -30,7 +30,7 @@ class TasksController < ApplicationController
     end
 
     if params[:task]
-      @tasks = Task.get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
+      @tasks = Task.page(params[:page]).per(PER).get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
     else
       Task.page(params[:page]).per(PER).order(created_at: :desc)
     end

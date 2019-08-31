@@ -10,6 +10,7 @@
 
   <%= f.submit "検索する"%>
 <% end %>
+
 <table>
   <th>タスク名</th>
   <th>タスク詳細</th>
@@ -35,3 +36,4 @@
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %><br>
 <%= link_to "新規登録順でソートする", tasks_path(sort_createday: "true") %><br>
 <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %>
+<%= paginate @tasks %>

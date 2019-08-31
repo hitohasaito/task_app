@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  PER = 7
   before_action :find_params,only:[:show, :edit, :update, :destroy]
   def new
     @task = Task.new
@@ -15,23 +16,23 @@ class TasksController < ApplicationController
   def index
     @task_new = Task.new
     if params[:sort_expired]
-      @tasks = Task.all.order(:task_limit)
+      @tasks = Task.page(params[:page]).per(PER).order(:task_limit)
     else
-      @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.page(params[:page]).per(PER).order(created_at: :desc)
     end
 
     if params[:sort_createday]
-      @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.page(params[:page]).per(PER).order(created_at: :desc)
     end
 
     if params[:sort_priority]
-      @tasks = Task.all.order(:task_priority)
+      @tasks = Task.page(params[:page]).per(PER).order(:task_priority)
     end
 
     if params[:task]
       @tasks = Task.get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
     else
-      Task.all.order(created_at: :desc)
+      Task.page(params[:page]).per(PER).order(created_at: :desc)
     end
   end
 

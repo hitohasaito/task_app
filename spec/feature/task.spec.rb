@@ -90,4 +90,10 @@ background do
     expect(page).to have_content "着手中"
 
   end
+
+  scenario "優先度順にソートするを押すと、タスクが優先度が高い順にソートされるかのテスト" do
+    visit tasks_path(sort_priority: "true")
+    expect(Task.order(:task_priority).map(&:id))
+
+  end
 end

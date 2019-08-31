@@ -16,7 +16,7 @@ Userモデル
 | task_body | text |
 | task_limit | datetime |
 | task_status | string |
-| task_priority | string |
+| task_priority | integer |
 | user_id|integer |
 
 Labelモデル

@@ -24,6 +24,10 @@ class TasksController < ApplicationController
       @tasks = Task.all.order(created_at: :desc)
     end
 
+    if params[:sort_priority]
+      @tasks = Task.all.order(:task_priority)
+    end
+
     if params[:task]
       @tasks = Task.get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
     else
@@ -52,7 +56,7 @@ class TasksController < ApplicationController
 private
 
   def task_params
-    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status)
+    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority)
   end
   def find_params
     @task = Task.find(params[:id])

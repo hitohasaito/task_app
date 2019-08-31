@@ -24,5 +24,9 @@
 <%= f.label:task_status %>
 <%= f.select:task_status,["未着手","着手中","完了"]%>
 </div>
+<div class = "task">
+<%= f.label:task_priority %>
+<%= f.select:task_priority, Task.task_priorities.keys, selected:Task.task_priorities[@task.task_priority] %>
+</div>
 <%= f.submit %>
 <% end %>

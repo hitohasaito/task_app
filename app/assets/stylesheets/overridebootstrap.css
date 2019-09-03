@@ -1,0 +1,20 @@
+body {
+  text-align: center;
+}
+
+table {
+  border: 1;
+  text-align: center;
+}
+table th {
+  padding: 10px;
+}
+
+table td {
+  padding: 3px 10px;
+}
+
+.btn-default{
+  width: 150px;
+  height: 30px;
+}

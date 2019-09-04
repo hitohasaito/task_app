@@ -21,9 +21,9 @@
 </nav>
 <br>
 <br>
-  <h1>タスク一覧</h1>
-  <p><%= flash[:notice] %></p>
-  <p>検索</p>
+<h1>タスク一覧</h1>
+<p><%= flash[:notice] %></p>
+<p>検索</p>
 <%= form_with(model:Task.new, method: :get, local:true) do |f| %>
   <%= f.label :task_name %>
   <%= f.text_field :task_name %>

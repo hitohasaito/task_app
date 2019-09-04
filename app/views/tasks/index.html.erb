@@ -23,6 +23,7 @@
 <br>
 <h1>タスク一覧</h1>
 <p><%= flash[:notice] %></p>
+
 <p>検索</p>
 <%= form_with(model:Task.new, method: :get, local:true) do |f| %>
   <%= f.label :task_name %>
@@ -59,6 +60,7 @@
   <% end %>
 </table>
 <br>
+
 <button type="button" class="btn btn-default btn-xs"><%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %></button><br>
 <button type="button" class="btn btn-default btn-xs"><%= link_to "新規登録順でソートする", tasks_path(sort_createday: "true") %></button><br>
 <button type="button" class="btn btn-default btn-xs"><%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %></button><br>

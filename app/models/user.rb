@@ -3,4 +3,6 @@ class User < ApplicationRecord
 
   before_validation {email.downcase!}
   validates :user, :email, uniqueness: true
+
+  has_many :tasks
 end

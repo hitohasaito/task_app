@@ -1,9 +1,10 @@
 class TasksController < ApplicationController
   PER = 7
   before_action :find_params,only:[:show, :edit, :update, :destroy]
+  before_action :access_permit
 
   def new
-    @task = Task.new
+      @task = Task.new
   end
 
   def create
@@ -16,7 +17,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def index    
+  def index
     @task_new = Task.new
     if params[:sort_expired]
       @tasks = Task.page(params[:page]).per(PER).order(:task_limit)
@@ -70,4 +71,10 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def access_permit
+    if @current_user == nil
+      redirect_to new_session_path
+      flash[:notice]= "ログインしてください"
+    end
+  end
 end

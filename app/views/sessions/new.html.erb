@@ -1,6 +1,7 @@
 <br>
 <br>
 <h1>ログイン画面</h1>
+<%= flash[:notice] %>
 <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
 
 <div class = "login_info">

@@ -29,12 +29,12 @@
     				<li><%= link_to "新規登録", new_task_path %></li>
             <li><%= link_to "一覧", tasks_path %></li>
             <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></li>
+            <p class="navbar-text">ようこそ<%= current_user.name %>さん。</p>
           <% else %>
             <li><%= link_to "ログイン",new_session_path %></li>
             <li><%= link_to "ユーザー登録", new_user_path %></li>
           <% end %>
           </ul>
-    			<p class="navbar-text">ようこそさん。</p>
     		</div>
     	</div>
     </nav>

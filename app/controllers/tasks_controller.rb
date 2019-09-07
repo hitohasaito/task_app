@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def index
+  def index    
     @task_new = Task.new
     if params[:sort_expired]
       @tasks = Task.page(params[:page]).per(PER).order(:task_limit)
@@ -69,5 +69,5 @@ class TasksController < ApplicationController
   def find_params
     @task = Task.find(params[:id])
   end
-  
+
 end

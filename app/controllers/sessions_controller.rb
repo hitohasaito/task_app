@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
-      session[:user_id] = user.id #暗号化されたユーザーIDを自動生成
+      session[:user_id] = user.id
       redirect_to new_task_path
       flash[:notice] = "ログインしました"
     else
@@ -13,4 +13,10 @@ class SessionsController < ApplicationController
       flash[:notice] = "ログインしてください"
     end
   end
-end
+
+    def destroy
+      session.delete(:user_id)
+      flash[:notice] = "ログアウトしました"
+      redirect_to  new_session_path
+    end
+  end

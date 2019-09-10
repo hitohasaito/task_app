@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
   PER = 7
-  before_action :access_permit,only:[:index, :show, :edit]
-  before_action :find_params,only:[:show, :edit, :update, :destroy]
+  before_action :access_permit
+  before_action :find_params, only:[:show, :edit, :update, :destroy]
+
   def new
       @task = Task.new
   end
@@ -73,8 +74,8 @@ class TasksController < ApplicationController
 
   def access_permit
     if current_user.nil?
-      flash[:notice]= "ログインしてください"
-      redirect_to new_session_path
+       redirect_to new_session_path
+       flash[:notice]= "ログインしてください"
     end
   end
 end

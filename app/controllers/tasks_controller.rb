@@ -71,11 +71,4 @@ class TasksController < ApplicationController
   def find_params
     @task = Task.find(params[:id])
   end
-
-  def access_permit
-    if current_user.nil?
-       redirect_to new_session_path
-       flash[:notice]= "ログインしてください"
-    end
-  end
 end

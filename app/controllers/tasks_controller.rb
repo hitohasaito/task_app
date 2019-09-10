@@ -1,14 +1,14 @@
 class TasksController < ApplicationController
   PER = 7
+  before_action :access_permit,only:[:index, :show, :edit]
   before_action :find_params,only:[:show, :edit, :update, :destroy]
-  before_action :access_permit
-
   def new
       @task = Task.new
   end
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       flash[:notice] = "新規登録しました"
       redirect_to tasks_path
@@ -72,9 +72,9 @@ class TasksController < ApplicationController
   end
 
   def access_permit
-    if @current_user == nil?
-      redirect_to new_session_path
+    if current_user.nil?
       flash[:notice]= "ログインしてください"
+      redirect_to new_session_path
     end
   end
 end

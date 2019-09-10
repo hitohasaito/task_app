@@ -29,8 +29,8 @@ class UsersController < ApplicationController
   end
 
   def check_login
-      @current_user.present?
-      redirect_to new_task_path
-      flash[:notice]= "ユーザー登録済みです"
+    if current_user.present?
+      redirect_to new_task_path flash[:notice]= "ユーザー登録済みです"
+    end
   end
 end

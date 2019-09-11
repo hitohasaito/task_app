@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
   PER = 7
-  before_action :access_permit
+  before_action :authenticate_user,only:[:show, :edit, :update, :destroy]
   before_action :find_params, only:[:show, :edit, :update, :destroy]
+  before_action :access_permit,only:[:index]
 
   def new
       @task = Task.new
@@ -70,5 +71,12 @@ class TasksController < ApplicationController
 
   def find_params
     @task = Task.find(params[:id])
+  end
+
+  def authenticate_user
+    @task = Task.find(params[:id])
+    unless @task.user_id == current_user.id
+      redirect_to tasks_path flash[:notice]= "権限がありません"
+    end
   end
 end

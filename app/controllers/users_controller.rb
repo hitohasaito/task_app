@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :access_permit,only:[:show]
+  #before_action :access_permit,only:[:show]
   before_action :check_login, only:[:new]
   before_action :set_id, only:[:show]
   before_action :authenticate_user, only:[:show]
@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in @user
       redirect_to user_path(@user.id)
     else
       render "new"

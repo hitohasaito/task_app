@@ -1,31 +1,32 @@
 require 'rails_helper'
 
 RSpec.feature "ユーザー", type: :feature do
-  background do
-    FactoryBot.build(:user)
-    FactoryBot.build(:second_user)
-  end
+  # background do
+  #   FactoryBot.create(:user)
+  #   FactoryBot.create(:second_user)
+  # end
 
-  scenario "ユーザー登録できること" do
+  scenario "ユーザー登録できるとユーザー詳細ページに変移する" do
 
     visit new_user_path
 
-    expect {
     fill_in "user[name]", with: "name1"
-    fill_in "user[email]", with: "e@email1.com"
-    fill_in "user[password]", with: "passwordpassword1"
-    fill_in "user[password_confirmation]", with: "passwordpassword1"
+    fill_in "user[email]", with: "name1@email.com"
+    fill_in "user[password]", with: "password1"
+    fill_in "user[password_confirmation]", with: "password1"
+
     click_button "登録する"
-    }.to change(User, :count).to(1)
-    #登録したら、ユーザー数が１増えているか確認
+
+    expect(page).to have_content "name1"
+    #save_and_open_page
   end
 
   scenario "メールアドレスとパスワードの組み合わせが合っていればログインできること" do
 
     visit new_session_path
-    
-    fill_in "session[email]", with: "e@email1.com"
-    fill_in "session[password]", with: "passwordpassword1"
+
+    fill_in "session[email]", with: "name1@email.com"
+    fill_in "session[password]", with: "password1"
 
     click_button "ログインする"
 

@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.feature "ユーザー", type: :feature do
   background do
-    #FactoryBot.create(:user)
-    #FactoryBot.create(:second_user)
+    FactoryBot.build(:user)
+    FactoryBot.build(:second_user)
   end
   scenario "ユーザー登録できること" do
-    user = FactoryBot.build(:user)
+
 
     visit new_user_path
 

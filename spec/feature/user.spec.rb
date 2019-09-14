@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature "ユーザー", type: :feature do
-  # background do
-  #   FactoryBot.create(:user)
-  #   FactoryBot.create(:second_user)
-  # end
 
   scenario "ユーザー登録できるとユーザー詳細ページに変移する" do
 
@@ -22,7 +18,8 @@ RSpec.feature "ユーザー", type: :feature do
   end
 
   scenario "メールアドレスとパスワードの組み合わせが合っていればログインできること" do
-
+    FactoryBot.create(:user)
+    
     visit new_session_path
 
     fill_in "session[email]", with: "name1@email.com"

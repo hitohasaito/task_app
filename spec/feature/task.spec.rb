@@ -3,18 +3,29 @@ require 'rails_helper'
 
 RSpec.feature "タスク管理機能", type: :feature do
 background do
-   FactoryBot.create(:task)
-   FactoryBot.create(:second_task)
-   FactoryBot.create(:third_task)
-  end
+  @user = FactoryBot.create(:user)
+
+   FactoryBot.create(:task, user_id: @user.id)
+   FactoryBot.create(:second_task, user_id: @user.id)
+   FactoryBot.create(:third_task, user_id: @user.id)
+
+   visit new_session_path
+
+   fill_in "session[email]", with: "name1@email.com"
+   fill_in "session[password]", with: "password1"
+
+   click_button "ログインする"
+
+   visit new_task_path
+end
 
  scenario "タスク一覧のテスト" do
-   visit tasks_path
+  visit tasks_path
 
   expect(page).to have_content "tasktask1"
   expect(page).to have_content "tasktask2"
-#save_and_open_page
-
+  expect(page).to have_content "tasktask3"
+  #save_and_open_page
  end
 
  scenario "タスク作成のテスト" do
@@ -29,7 +40,7 @@ background do
 
    expect(page).to have_content "taskname1"
    expect(page).to have_content "tasktask1"
-#save_and_open_page
+   #save_and_open_page
  end
 
  scenario "タスク詳細のテスト" do
@@ -64,7 +75,7 @@ background do
     click_button "検索する"
 
     expect(page).to have_content "taskname1"
-#save_and_open_page
+    #save_and_open_page
   end
 
   scenario "一覧画面の検索機能でステータス選択すると、選択したステータスに該当する結果が出るかのテスト" do
@@ -88,12 +99,12 @@ background do
 
     expect(page).to have_content "taskname3"
     expect(page).to have_content "着手中"
-
+    #save_and_open_page
   end
 
   scenario "優先度順にソートするを押すと、タスクが優先度が高い順にソートされるかのテスト" do
     visit tasks_path(sort_priority: "true")
     expect(Task.order(:task_priority).map(&:id))
-
+     #save_and_open_page
   end
 end

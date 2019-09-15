@@ -117,4 +117,14 @@ end
 
      #save_and_open_page
   end
+
+   scenario "ログインしていない状態でタスクのページに飛ぼうとするとログインページに変移するテスト" do
+
+    click_link "ログアウト"
+
+    visit tasks_path || edit_task_path(task.id)||task_path(task.id)|| "tasks#destroy"
+
+    expect(page).to have_content "ログイン画面"
+    #save_and_open_page
+  end
 end

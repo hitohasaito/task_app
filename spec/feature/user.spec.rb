@@ -32,4 +32,33 @@ RSpec.feature "ユーザー", type: :feature do
     visit new_task_path
     #save_and_open_page
   end
+
+  scenario "ログアウトボタンを押すと、ログアウトしてログインページに変移するテスト" do
+    visit new_session_path
+
+    fill_in "session[email]", with: "name1@email.com"
+    fill_in "session[password]", with: "password1"
+
+    click_button "ログインする"
+
+    visit new_task_path
+    #save_and_open_page
+    click_link "ログアウト"
+
+    visit new_session_path
+    #save_and_open_page
+  end
+
+  scenario "ユーザーがログインした状態の時はユーザー登録画面にいけないテスト" do
+    visit new_session_path
+
+    fill_in "session[email]", with: "name1@email.com"
+    fill_in "session[password]", with: "password1"
+
+    click_button "ログインする"
+
+    visit new_user_path
+
+    expect(page).to have_content("新規登録画面")
+  end
 end

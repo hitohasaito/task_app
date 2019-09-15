@@ -8,8 +8,8 @@ module SessionsHelper
   end
 
   def log_in(user)
-   session[:user_id] = user.id
- end
+    session[:user_id] = user.id
+  end
 
   def access_permit
     if current_user.nil?

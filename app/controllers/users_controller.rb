@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  #before_action :access_permit,only:[:show]
   before_action :check_login, only:[:new]
   before_action :set_id, only:[:show]
+  before_action :access_permit,only:[:show]
   before_action :authenticate_user, only:[:show]
 
   def new
@@ -33,14 +33,14 @@ class UsersController < ApplicationController
 
   def check_login
     if current_user.present?
-      redirect_to new_task_path, notice: "ユーザー登録済みです"
+      redirect_to new_task_path
     end
   end
 
   def authenticate_user
     @user = User.find(params[:id])
     unless @user.id == current_user.id
-      redirect_to tasks_path flash[:notice]= "権限がありません"
+    redirect_to new_task_path, notice: "権限がありません"
     end
   end
 end

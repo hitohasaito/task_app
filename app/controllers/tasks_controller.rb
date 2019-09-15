@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   PER = 7
   before_action :authenticate_user,only:[:show, :edit, :update, :destroy]
   before_action :find_params, only:[:show, :edit, :update, :destroy]
-  before_action :access_permit,only:[:index]
+  before_action :access_permit
 
   def new
       @task = Task.new
@@ -75,8 +75,8 @@ class TasksController < ApplicationController
 
   def authenticate_user
     @task = Task.find(params[:id])
-    unless @task.user_id == current_user.id
-      redirect_to tasks_path flash[:notice]= "権限がありません"
+    unless current_user.present? && @task.user_id == current_user.id
+    redirect_to tasks_path, notice:"権限がありません"
     end
   end
 end

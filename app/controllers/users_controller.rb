@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :check_login, only:[:new]
   before_action :set_id, only:[:show]
-  before_action :access_permit,only:[:show]
   before_action :authenticate_user, only:[:show]
 
   def new
@@ -39,7 +38,7 @@ class UsersController < ApplicationController
 
   def authenticate_user
     @user = User.find(params[:id])
-    unless @user.id == current_user.id
+    unless current_user.present? && @user.id == current_user.id
     redirect_to new_task_path, notice: "権限がありません"
     end
   end

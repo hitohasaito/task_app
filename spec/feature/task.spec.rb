@@ -12,6 +12,7 @@ background do
 
    visit new_session_path
 
+   #userでログイン
    fill_in "session[email]", with: "name1@email.com"
    fill_in "session[password]", with: "password1"
 
@@ -107,6 +108,7 @@ end
     expect(Task.order(:task_priority).map(&:id))
      #save_and_open_page
   end
+
   scenario "自分が作成したタスクだけ表示するテスト" do
     visit tasks_path
 
@@ -115,15 +117,4 @@ end
 
      #save_and_open_page
   end
-
-  scenario "ログアウトボタンを押すと、ログアウトしてログインページに変移するかのテスト" do
-    visit new_task_path
-    #save_and_open_page
-    click_link "ログアウト"
-
-    visit new_session_path
-    #save_and_open_page
-  end
-  
-
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "ユーザー", type: :feature do
   background do
-      FactoryBot.create(:user)
+      @user = FactoryBot.create(:user)
   end
 
   scenario "ユーザー登録できるとユーザー詳細ページに変移する" do
@@ -60,5 +60,16 @@ RSpec.feature "ユーザー", type: :feature do
     visit new_user_path
 
     expect(page).to have_content("新規登録画面")
+  end
+
+  scenario "自分以外のユーザー詳細ページにいけないテスト" do
+    visit new_session_path
+
+    fill_in "session[email]", with: "name1@email.com"
+    fill_in "session[password]", with: "password1"
+
+    click_button "ログインする"
+
+    visit user_path(@.id)
   end
 end

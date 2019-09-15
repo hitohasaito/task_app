@@ -6,9 +6,9 @@ background do
   @user = FactoryBot.create(:user)
   @second_user = FactoryBot.create(:second_user)
 
-   FactoryBot.create(:task, user_id: @user.id)
-   FactoryBot.create(:second_task, user_id: @user.id)
-   FactoryBot.create(:third_task, user_id: @second_user.id)
+   @task = FactoryBot.create(:task, user_id: @user.id)
+   @second_task = FactoryBot.create(:second_task, user_id: @user.id)
+   @third_task= FactoryBot.create(:third_task, user_id: @second_user.id)
 
    visit new_session_path
 
@@ -110,6 +110,7 @@ end
   end
 
   scenario "自分が作成したタスクだけ表示するテスト" do
+    #userでログイン中
     visit tasks_path
 
     expect(page).to have_content "tasktask1"
@@ -118,13 +119,43 @@ end
      #save_and_open_page
   end
 
-   scenario "ログインしていない状態でタスクのページに飛ぼうとするとログインページに変移するテスト" do
+   scenario "ログインしていない状態でタスク一覧のページに飛ぼうとするとログインページに変移するテスト" do
 
-    click_link "ログアウト"
+     click_link "ログアウト"
 
-    visit tasks_path || edit_task_path(task.id)||task_path(task.id)|| "tasks#destroy"
+     visit tasks_path
 
-    expect(page).to have_content "ログイン画面"
+     expect(page).to have_content "ログイン画面"
     #save_and_open_page
-  end
+   end
+
+   scenario "ログインしていない状態でタスク編集のページに飛ぼうとするとログインページに変移するテスト" do
+
+     click_link "ログアウト"
+
+     visit edit_task_path(@task.id)
+
+     expect(page).to have_content "ログイン画面"
+    #save_and_open_page
+   end
+
+   scenario "ログインしていない状態でタスク詳細ページに飛ぼうとするとログインページに変移するテスト" do
+
+     click_link "ログアウト"
+
+     visit task_path(@task.id)
+
+     expect(page).to have_content "ログイン画面"
+    #save_and_open_page
+   end
+
+   scenario "ログインしていない状態でタスクを削除しようとするとログインページに変移するテスト" do
+
+     click_link "ログアウト"
+
+     page.driver.submit :delete, "/tasks/#{@task.id}", {}
+
+     expect(page).to have_content "ログイン画面"
+    #save_and_open_page
+   end
 end

@@ -26,7 +26,7 @@ end
   expect(page).to have_content "tasktask1"
   expect(page).to have_content "tasktask2"
   #expect(page).to have_content "tasktask3"
-  save_and_open_page
+  #save_and_open_page
  end
 
  scenario "タスク作成のテスト" do
@@ -115,4 +115,15 @@ end
 
      #save_and_open_page
   end
+
+  scenario "ログアウトボタンを押すと、ログアウトしてログインページに変移するかのテスト" do
+    visit new_task_path
+    #save_and_open_page
+    click_link "ログアウト"
+
+    visit new_session_path
+    #save_and_open_page
+  end
+  
+
 end

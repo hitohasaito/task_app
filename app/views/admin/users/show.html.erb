@@ -4,3 +4,4 @@
 
 <p>名前:<%= @user.name %></p>
 <p>メールアドレス:<%= @user.email %></p>
+<p><%= link_to "編集する", edit_admin_user_path(@user.id) %></p>

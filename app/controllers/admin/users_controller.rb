@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_id, only:[:show]
+  before_action :set_id, only:[:show, :edit, :update]
 
   def new
     @user = User.new
@@ -20,6 +20,17 @@ class Admin::UsersController < ApplicationController
 
   def index
     @users = User.all
+  end
+
+  def edit
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to tasks_path, notice: "編集しました"
+    else
+      render "edit"
+    end
   end
 
   private

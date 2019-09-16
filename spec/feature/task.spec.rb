@@ -22,12 +22,11 @@ background do
 end
 
  scenario "タスク一覧のテスト" do
-  visit tasks_path
+   visit tasks_path
 
-  expect(page).to have_content "tasktask1"
-  expect(page).to have_content "tasktask2"
-  #expect(page).to have_content "tasktask3"
-  #save_and_open_page
+   expect(page).to have_content "tasktask1"
+   expect(page).to have_content "tasktask2"
+
  end
 
  scenario "タスク作成のテスト" do
@@ -46,11 +45,10 @@ end
  end
 
  scenario "タスク詳細のテスト" do
-
    visit task_path(Task.first)
    expect(page).to have_content "tasktask1"
-
  end
+ 
  scenario "タスク一覧が作成日時で降順に並んでいるかのテスト" do
    visit tasks_path
 

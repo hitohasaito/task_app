@@ -55,4 +55,14 @@ RSpec.feature "ユーザー管理機能", type: :feature do
 
     expect(page).to have_content "name1"
   end
+
+  scenario "ユーザーを削除すると紐づいているタスクも削除される" do
+    @user.tasks.create(task_name: "テスト", task_body: "テストです")
+    #byebug
+    visit admin_user_path(@user.id)
+
+    expect{ @user.destroy }.to change{ Task.count }.by(-1)
+    byebug
+  end
+#save_and_open_page
 end

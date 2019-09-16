@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_id, only:[:show, :edit, :update, :destroy]
+  before_action :require_admin
 
   def new
     @user = User.new
@@ -46,5 +47,9 @@ class Admin::UsersController < ApplicationController
 
   def set_id
     @user = User.find(params[:id])
+  end
+
+  def require_admin
+    redirect_to new_task_path unless current_user.admin?
   end
 end

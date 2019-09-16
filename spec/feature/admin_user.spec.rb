@@ -62,4 +62,19 @@ RSpec.feature "ユーザー管理機能", type: :feature do
     expect{ @user.destroy }.to change{ Task.count }.by(-1)
     #byebug
   end
+
+  scenario "管理者以外が管理者ページにアクセスしようとすると、ログインページに飛ぶ" do
+    click_link "ログアウト"
+
+    visit new_session_path
+    #second_userでログイン
+    fill_in "session[email]", with: "name2@email.com"
+    fill_in "session[password]", with: "password2"
+
+    click_button "ログインする"
+
+    visit new_admin_user_path
+
+    visit new_session_path
+  end
 end

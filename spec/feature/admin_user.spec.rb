@@ -20,6 +20,21 @@ RSpec.feature "ユーザー管理機能", type: :feature do
 
     expect(page).to have_content "name1"
     expect(page).to have_content "name2"
-    save_and_open_page
+    #ave_and_open_page
+  end
+
+  scenario "管理者ユーザー作成" do
+    visit new_admin_user_path
+
+    fill_in "user[name]", with: "name3"
+    fill_in "user[email]", with: "name3@email.com"
+    fill_in "user[password]", with: "password3"
+    fill_in "user[password_confirmation]", with: "password3"
+    check '管理者権限'
+
+    click_button "登録する"
+
+    expect(page).to have_content "name3"
+    #save_and_open_page
   end
 end

@@ -1,11 +1,16 @@
 class TasksController < ApplicationController
   PER = 7
-  before_action :find_params,only:[:show, :edit, :update, :destroy]
+  before_action :authenticate_user,only:[:show, :edit, :update, :destroy]
+  before_action :find_params, only:[:show, :edit, :update, :destroy]
+  before_action :access_permit
+
   def new
-    @task = Task.new
+      @task = Task.new
   end
+
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       flash[:notice] = "新規登録しました"
       redirect_to tasks_path
@@ -13,6 +18,7 @@ class TasksController < ApplicationController
       render "new"
     end
   end
+
   def index
     @task_new = Task.new
     if params[:sort_expired]
@@ -38,8 +44,10 @@ class TasksController < ApplicationController
 
   def show
   end
+
   def edit
   end
+
   def update
     if @task.update(task_params)
       flash[:notice] = "編集しました"
@@ -48,18 +56,27 @@ class TasksController < ApplicationController
       render "edit"
     end
   end
+
   def destroy
      @task.destroy
      flash[:notice] = "削除しました"
      redirect_to tasks_path
   end
 
-private
+  private
 
   def task_params
     params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority)
   end
+
   def find_params
     @task = Task.find(params[:id])
+  end
+
+  def authenticate_user
+    @task = Task.find(params[:id])
+    unless current_user.present? && @task.user_id == current_user.id
+    redirect_to tasks_path, notice:"権限がありません"
+    end
   end
 end

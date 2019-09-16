@@ -49,4 +49,10 @@ RSpec.feature "ユーザー管理機能", type: :feature do
     expect(page).to have_content "name1_edit"
     #save_and_open_page
   end
+
+  scenario "ユーザー詳細を表示" do
+    visit admin_user_path(@admin_user.id)
+
+    expect(page).to have_content "name1"
+  end
 end

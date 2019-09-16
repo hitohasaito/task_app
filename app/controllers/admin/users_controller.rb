@@ -27,12 +27,12 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to tasks_path, notice: "編集しました"
+      redirect_to users_path, notice: "編集しました"
     else
       render "edit"
     end
   end
-
+  
   private
 
   def user_params

@@ -19,7 +19,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.all.includes(:tasks)
   end
 
   def edit

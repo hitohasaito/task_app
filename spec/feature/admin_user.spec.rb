@@ -62,5 +62,4 @@ RSpec.feature "ユーザー管理機能", type: :feature do
     expect{ @user.destroy }.to change{ Task.count }.by(-1)
     #byebug
   end
-#save_and_open_page
 end

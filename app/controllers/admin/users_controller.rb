@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_id, only:[:show, :edit, :update]
+  before_action :set_id, only:[:show, :edit, :update, :destroy]
 
   def new
     @user = User.new
@@ -27,12 +27,17 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to users_path, notice: "編集しました"
+      redirect_to admin_users_path, notice: "編集しました"
     else
       render "edit"
     end
   end
-  
+
+  def destroy
+    @user.destroy
+    redirect_to admin_users_path, notice: "削除しました"
+  end
+
   private
 
   def user_params

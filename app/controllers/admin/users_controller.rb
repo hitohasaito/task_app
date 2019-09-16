@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_id, only:[:show]
+
   def new
     @user = User.new
   end
@@ -12,10 +13,13 @@ class Admin::UsersController < ApplicationController
     else
       render "new"
     end
+  end
 
   def show
   end
 
+  def index
+    @users = User.all
   end
 
   private

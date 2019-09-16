@@ -4,7 +4,6 @@ RSpec.feature "ユーザー管理機能", type: :feature do
   background do
     @admin_user = FactoryBot.create(:user, admin: "true")
     @user = FactoryBot.create(:second_user)
-
     #管理者userでログイン
     visit new_session_path
 
@@ -12,7 +11,6 @@ RSpec.feature "ユーザー管理機能", type: :feature do
     fill_in "session[password]", with: "password1"
 
     click_button "ログインする"
-
   end
 
   scenario "ユーザー一覧画面を表示" do
@@ -35,6 +33,20 @@ RSpec.feature "ユーザー管理機能", type: :feature do
     click_button "登録する"
 
     expect(page).to have_content "name3"
+    #save_and_open_page
+  end
+
+  scenario "ユーザーを編集" do
+    visit edit_admin_user_path(@admin_user.id)
+
+    fill_in "user[name]", with: "name1_edit"
+    fill_in "user[email]", with: "name1@email.com"
+    fill_in "user[password]", with: "password1"
+    fill_in "user[password_confirmation]", with: "password1"
+
+    click_button "更新する"
+
+    expect(page).to have_content "name1_edit"
     #save_and_open_page
   end
 end

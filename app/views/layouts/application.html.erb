@@ -32,6 +32,7 @@
             <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></li>
               <% if current_user.admin? %>
                 <li><%= link_to "ユーザー一覧", admin_users_path %></li>
+                <li><%= link_to "管理者用ユーザー登録画面", new_admin_user_path %></li>
               <% end %>
             <p class="navbar-text">ようこそ<%= current_user.name %>さん。</p>
           <% else %>

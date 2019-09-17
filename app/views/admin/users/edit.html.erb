@@ -1,0 +1,37 @@
+<br>
+<br>
+<h1>ユーザー編集画面</h1>
+<%= form_with(model:[:admin,@user], local: true) do |f| %>
+<% if @user.errors.any? %>
+  <div id = "errors_info">
+    <h2><%= @user.errors.count %>件のエラーがあります</h2>
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class= "user_info">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+<div class= "user_info">
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+</div>
+<div class= "user_info">
+  <%= f.label :admin %>
+  <%= f.check_box :admin %>
+</div>
+<div class= "user_info">
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+</div>
+<div class= "user_info">
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
+</div>
+  <%= f.submit %>
+<% end %>

@@ -1,6 +1,22 @@
-50.times do |artist|
+10.times do |artist|
   name = Faker::Artist.name
   email = Faker::Internet.email
   password = "password"
-  User.create!(name: name,email: email, password: password, password_confirmation: password)
+  admin = "true"
+  User.create!(name: name,
+              email: email,
+              password: password,
+              password_confirmation: password)
+end
+
+10.times do |animal|
+  name = Faker::Creature::Animal.name
+  email = Faker::Internet.email
+  password = "password"
+  admin = "true"
+  User.create!(name: name,
+              email: email,
+              password: password,
+              password_confirmation: password,
+              admin: true)
 end

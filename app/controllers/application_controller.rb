@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   rescue_from MyError, with: :myerror
 
   def myerror
-    render "errors/forbidden"
+    render "errors/myerror"
   end
 end

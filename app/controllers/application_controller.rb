@@ -4,10 +4,10 @@ class ApplicationController < ActionController::Base
 
   class MyError < StandardError
   end
-
+#binding.pry
   rescue_from MyError, with: :myerror
-
+#binding.pry
   def myerror
-    render "errors/myerror"
+    render "errors/myerror.html.erb"
   end
 end

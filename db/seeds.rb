@@ -9,7 +9,7 @@
               password_confirmation: password)
 end
 
-10.times do |animal|
+3.times do |animal|
   name = Faker::Creature::Animal.name
   email = Faker::Internet.email
   password = "password"

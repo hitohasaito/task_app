@@ -16,7 +16,10 @@ class User < ApplicationRecord
   def check_admin_user
     @admin_user = User.where(admin: "true")
     #binding.pry
-    if @admin_user.count == 1
+    if self.admin?
+      if @admin_user.count == 1
+        throw(:abort)
+      end
     end
   end
 end

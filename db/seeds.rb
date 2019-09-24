@@ -20,3 +20,8 @@ end
               password_confirmation: password,
               admin: true)
 end
+
+4.times do |color|
+  label_name = Faker::Color.color_name
+  Label.create!(label_name: label_name)
+end

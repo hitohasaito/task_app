@@ -67,7 +67,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority, labelling_labels_ids: [])
+    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority, labelling_label_ids: [])
   end
 
   def find_params

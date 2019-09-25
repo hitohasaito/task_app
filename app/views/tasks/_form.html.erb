@@ -30,7 +30,7 @@
 </div>
 <div>
   <% Label.all.each do |label| %>
-    <%= f.check_box :label_ids,{multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false },label[:id] %>
+    <%= f.check_box :labelling_label_ids,{multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false },label[:id] %>
     <%= label.label_name %>
   <% end %>
 </div>

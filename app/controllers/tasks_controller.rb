@@ -9,6 +9,7 @@ class TasksController < ApplicationController
   end
 
   def create
+    #binding.pry
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if @task.save
@@ -66,7 +67,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority)
+    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority, labelling_labels_ids: [])
   end
 
   def find_params

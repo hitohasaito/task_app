@@ -37,6 +37,8 @@
       <td><%= link_to "編集", edit_task_path(task.id) %></td>
       <td><%= link_to "削除", task_path(task.id),method: :delete, data: {confirm: "本当に削除して良いですか？" }%></td>
     </tr>
+    <% task.abelling_labels.eack do |l| %>
+      <%= l.label_name %>
     <% end %>
   <% end %>
 

@@ -11,6 +11,9 @@
   <%= f.label :task_status %>
   <%= f.select :task_status, ["未着手","着手中","完了"],include_blank: true%>
 
+  <%= f.label :label %>
+  <%= f.select :label_id, Label.pluck(:label_name,:id),include_blank: true %>
+
   <%= f.submit "検索する"%>
 <% end %>
 
@@ -22,7 +25,8 @@
     <th>作成日時</th>
     <th>ステータス</th>
     <th>優先順位</th>
-    <th colspan="4"></th>
+    <th>ラベル</th>
+    <th colspan="3"></th>
   </tr>
   <% @tasks.each do |task| %>
     <% if task.user_id == current_user.id%>

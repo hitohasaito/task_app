@@ -21,6 +21,7 @@ class TasksController < ApplicationController
   end
 
   def index
+
     @task_new = Task.new
     if params[:sort_expired]
       @tasks = Task.page(params[:page]).per(PER).order(:task_limit)
@@ -39,8 +40,15 @@ class TasksController < ApplicationController
     if params[:task]
       @tasks = Task.page(params[:page]).per(PER).get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
     else
-      Task.page(params[:page]).per(PER).order(created_at: :desc)
+      @tasks = Task.page(params[:page]).per(PER).order(created_at: :desc)
     end
+   #binding.pry
+     if params[:task][:label_id]
+       binding.pry
+       @task = Labelling.where(label_id:params[:task][:label_id]).pluck(:task_id)
+       #送られてきたlabel_idに該当する中感テーブルの値を全て取り出し、それに該当するtaskの情報も取り出す
+       @tasks = Task.page(params[:page]).per(PER).find(@task)
+     end
   end
 
   def show

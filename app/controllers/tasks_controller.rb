@@ -42,9 +42,9 @@ class TasksController < ApplicationController
     else
       @tasks = Task.page(params[:page]).per(PER).order(created_at: :desc)
     end
-   #binding.pry
-     if params[:task][:label_id]
-       binding.pry
+
+     if params[:task][:search_label].present?
+       #binding.pry
        @task = Labelling.where(label_id:params[:task][:label_id]).pluck(:task_id)
        #送られてきたlabel_idに該当する中感テーブルの値を全て取り出し、それに該当するtaskの情報も取り出す
        @tasks = Task.page(params[:page]).per(PER).find(@task)

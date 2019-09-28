@@ -4,10 +4,9 @@ class Task < ApplicationRecord
 
   scope :get_task, ->task_name{where("task_name LIKE ?", "%#{task_name}%")}
   scope :get_status, ->task_status{where("task_status LIKE ?", "%#{task_status}%")}
-
   enum task_priority:{"高": 0, "中": 1, "低": 2}
 
   belongs_to :user
   has_many :labellings, dependent: :destroy
-  has_many :labelling_labels, through: :labellings, source: :label
+  has_many :labels, through: :labellings, source: :label
 end

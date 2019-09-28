@@ -13,7 +13,6 @@
 
   <%= f.label :label %>
   <%= f.select :label_id, Label.pluck(:label_name,:id),include_blank: true %>
-  <%= f.hidden_field :search_label, value: "true" %>
 
   <%= f.submit "検索する"%>
 <% end %>
@@ -39,7 +38,7 @@
       <td><%= task.task_status %></td>
       <td><%= task.task_priority %></td>
       <td>
-      <% task.labelling_labels.each do |l| %>
+      <% task.labels.each do |l| %>
         <%= l.label_name %>
       <% end %>
       </td>

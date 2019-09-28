@@ -21,7 +21,7 @@ class TasksController < ApplicationController
   end
 
   def index
-
+    #binding.pry
     @task_new = Task.new
     if params[:sort_expired]
       @tasks = Task.page(params[:page]).per(PER).order(:task_limit)
@@ -43,12 +43,28 @@ class TasksController < ApplicationController
       @tasks = Task.page(params[:page]).per(PER).order(created_at: :desc)
     end
 
-     if params[:task][:search_label].present?
-       #binding.pry
-       @task = Labelling.where(label_id:params[:task][:label_id]).pluck(:task_id)
-       #送られてきたlabel_idに該当する中感テーブルの値を全て取り出し、それに該当するtaskの情報も取り出す
-       @tasks = Task.page(params[:page]).per(PER).find(@task)
-     end
+    if params[:task]
+      if params[:task][:task_name] && params[:task][:task_body]&& params[:task][:label_id].present?
+        @tasks = Task.page(params[:page]).per(PER).get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
+
+      elsif params[:task][:task_name] && params[:task][:label_id].present?
+        #送られてきたラベルのIDに合致するtask_idを取得
+        task = Labelling
+          .where(label_id:params[:task][:label_id]) # [Labeling(label_id: 1, task_id: 1), Labeling(label_id: 1, task_id: 2), Labeling(label_id: 1, task_id: 3) ]
+          .pluck(:task_id) # [1, 2, 3] task_id
+          .map { |task_id| Task.find(task_id) } #[Task(1), Task(2), Task(3)]
+          .select { |t| t.task_name == params[:task][:task_name] }
+       @tasks = Kaminari.paginate_array(task).page(params[:page]).per(PER)
+
+
+      elsif params[:task][:label_id].present?
+           task_array = Labelling.where(label_id:params[:task][:label_id]).pluck(:task_id)
+           task = Task.find(task_array)
+           @tasks = Kaminari.paginate_array(task).page(params[:page]).per(PER)
+      else
+          @tasks = Task.page(params[:page]).per(PER).order(created_at: :desc)
+      end
+    end
   end
 
   def show
@@ -75,7 +91,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority, labelling_label_ids: [])
+    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority, label_ids: [])
   end
 
   def find_params
@@ -89,3 +105,43 @@ class TasksController < ApplicationController
     end
   end
 end
+
+# # map例
+# results = []
+# arrays = [1, 2, 3]
+#
+# arrays.each do |a|
+#   results.push(a * 2)
+# end
+#
+# # map解
+# arrays = [1, 2, 3]
+#
+# results = arrays.map do |a|
+#   a * 2
+# end
+#
+# # map解2
+# arrays = [1, 2, 3]
+#
+# results = arrays.map { |a| a * 2 }
+#
+# # fliter + map例 3の倍数は通さない
+# results = []
+# arrays = [1, 2, 3]
+#
+# arrays.each do |a|
+#   results.push(a * 2) unless a % 3 == 0
+# end
+#
+# results -> [2, 4]
+#
+#
+# # fliter + map  3の倍数は通さない
+# arrays = [1, 2, 3]
+#
+# results = arrays
+#             .select { |a| a % 3 != 0 } # [1, 2]
+#             .map { |a| a * 2 }
+#
+# results -> [2, 4]

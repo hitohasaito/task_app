@@ -6,6 +6,9 @@ class Task < ApplicationRecord
   scope :get_task_and_label, -> (task_name: task_name, label_id: label_id) do
     joins(:labels).where(labels: { id: label_id }).where("task_name LIKE ?", "%#{task_name}%")
   end
+  scope :get_task_status_label, ->(task_name: task_name, label_id: label_id, task_status: task_status) do
+    joins(:labels).where(labels: {id: label_id}).where("task_name LIKE ?", "%#{task_name}%").where(task_status: task_status)
+  end
 
   # scope :get_task_and_label, -> (task_name: task_name, label_id: label_id) do
   #   joins(:labels).where(labels: { id: label_id }).where(task_name: task_name)

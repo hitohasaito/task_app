@@ -42,6 +42,13 @@ class TasksController < ApplicationController
       if  params[:task][:label_id].empty?
         @tasks = Task.page(params[:page]).per(PER).get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
 
+      elsif params[:task][:task_name] && params[:task][:label_id].present?#タスク名とラベルが検索条件にあったら、ラベル名とタスク名(部分一致可)に合った結果を返す
+          tasks = Task.get_task_and_label(
+            task_name: params[:task][:task_name],
+            label_id: params[:task][:label_id]
+          )
+        @tasks = Kaminari.paginate_array(tasks).page(params[:page]).per(PER)
+
       elsif params[:task][:task_name] && params[:task][:task_status]&& params[:task][:label_id].present?#全ての項目が検索条件にあったら
         tasks = Task.get_task_status_label(
           task_name: params[:task][:task_name],
@@ -50,20 +57,13 @@ class TasksController < ApplicationController
         )
         @tasks = Kaminari.paginate_array(tasks).page(params[:page]).per(PER)
 
-      elsif params[:task][:task_name] && params[:task][:label_id].present?#タスク名とラベルが検索条件にあったら
-          tasks = Task.get_task_and_label(
-            task_name: params[:task][:task_name],
-            label_id: params[:task][:label_id]
-          )
-        @tasks = Kaminari.paginate_array(tasks).page(params[:page]).per(PER)
-
       elsif params[:task][:task_status] && params[:task][:label_id].present?#ステータスとラベルが検索条件にあったら
         task = Labelling
         .where(label_id:params[:task][:label_id])
         .pluck(:task_id)
         .map { |task_id| Task.find(task_id) }
         .select { |t| t.task_status == params[:task][:task_status]}
-      @tasks = Kaminari.paginate_array(task).page(params[:page]).per(PER)
+        @tasks = Kaminari.paginate_array(task).page(params[:page]).per(PER)
 
       else
           @tasks = Task.page(params[:page]).per(PER).order(created_at: :desc)

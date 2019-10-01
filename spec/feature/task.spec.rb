@@ -6,6 +6,8 @@ background do
   @user = FactoryBot.create(:user)
   @second_user = FactoryBot.create(:second_user)
 
+  @label = FactoryBot.create(:label)
+
    @task = FactoryBot.create(:task, user_id: @user.id)
    @second_task = FactoryBot.create(:second_task, user_id: @user.id)
    @third_task= FactoryBot.create(:third_task, user_id: @second_user.id)
@@ -18,7 +20,6 @@ background do
 
    click_button "ログインする"
 
-   visit new_task_path
 end
 
  scenario "タスク一覧のテスト" do
@@ -48,7 +49,7 @@ end
    visit task_path(Task.first)
    expect(page).to have_content "tasktask1"
  end
- 
+
  scenario "タスク一覧が作成日時で降順に並んでいるかのテスト" do
    visit tasks_path
 
@@ -114,7 +115,6 @@ end
     expect(page).to have_content "tasktask1"
     expect(page).to have_content "tasktask2"
 
-     #save_and_open_page
   end
 
    scenario "ログインしていない状態でタスク一覧のページに飛ぼうとするとログインページに変移するテスト" do
@@ -156,4 +156,22 @@ end
      expect(page).to have_content "ログイン画面"
     #save_and_open_page
    end
+
+   scenario "タスク登録時にラベルも登録できるか" do
+     visit new_task_path
+#save_and_open_page
+
+     fill_in "task[task_name]", with: "taskname1"
+     #save_and_open_page
+     check "task[label_ids][]"
+
+     click_button "登録する"
+
+     visit tasks_path
+
+     expect(page).to have_content "taskname1"
+     expect(page).to have_content "label1"
+     #save_and_open_page
+   end
+
 end

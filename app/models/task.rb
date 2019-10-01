@@ -6,7 +6,7 @@ class Task < ApplicationRecord
   scope :get_task_and_label, -> (task_name: task_name, label_id: label_id) do
     joins(:labels).where(labels: { id: label_id }).where("task_name LIKE ?", "%#{task_name}%")
   end
-  scope :get_task_status_label, ->(task_name: task_name, label_id: label_id, task_status: task_status) do
+  scope :get_task_and_status_and_label, ->(task_name: task_name, label_id: label_id, task_status: task_status) do
     joins(:labels).where(labels: {id: label_id}).where("task_name LIKE ?", "%#{task_name}%").where(task_status: task_status)
   end
 
@@ -15,6 +15,7 @@ class Task < ApplicationRecord
   # end
   #
   scope :get_status, ->task_status{where("task_status LIKE ?", "%#{task_status}%")}
+
   enum task_priority:{"高": 0, "中": 1, "低": 2}
 
   belongs_to :user

@@ -50,7 +50,7 @@ class TasksController < ApplicationController
         @tasks = Kaminari.paginate_array(tasks).page(params[:page]).per(PER)
 
       elsif params[:task][:task_name] && params[:task][:task_status]&& params[:task][:label_id].present?#全ての項目が検索条件にあったら
-        tasks = Task.get_task_status_label(
+        tasks = Task.get_task_and_status_and_label(
           task_name: params[:task][:task_name],
           label_id: params[:task][:label_id],
           task_status: params[:task][:task_status]

@@ -7,9 +7,10 @@ background do
   @second_user = FactoryBot.create(:second_user)
 
   @label = FactoryBot.create(:label)
+  # @second_label = FactoryBot.create(:second_label)
 
   @task = FactoryBot.create(:task, user_id: @user.id,label_ids: @label.id)
-  @second_task = FactoryBot.create(:second_task, user_id: @user.id)
+  @second_task = FactoryBot.create(:second_task, user_id: @user.id,label_ids: @label.id)
   @third_task= FactoryBot.create(:third_task, user_id: @second_user.id)
 
    visit new_session_path
@@ -157,9 +158,8 @@ end
     #save_and_open_page
    end
 
-   scenario "タスク登録時にラベルも登録できるかのテスト" do
+   scenario "タスク登録時にラベルも登録できるかテスト" do
      visit new_task_path
-#save_and_open_page
 
      fill_in "task[task_name]", with: "taskname1"
      #save_and_open_page
@@ -171,10 +171,12 @@ end
 
      expect(page).to have_content "taskname1"
      expect(page).to have_content "label1"
+
      #save_and_open_page
    end
 
-   scenario "ラベルとタスク名で検索すると、両方に合致する検索結果が出るかのテスト" do
+   #検索機能
+   scenario "ラベルとタスク名で検索すると、両方に合致する検索結果が出るかテスト" do
      visit tasks_path
 
      fill_in "task[task_name]", with: "taskname1"
@@ -185,6 +187,37 @@ end
 
      expect(page).to have_content "taskname1"
      expect(page).to have_content "label1"
+     #save_and_open_page
+   end
+
+   scenario "ラベル名だけ指定して、そのラベルが付いているタスクが検索できるかテスト" do
+     visit tasks_path
+
+     #@taskの検索結果を出す
+     select "label1", from: "task_label_id"
+      #save_and_open_page
+
+     click_button "検索する"
+     #save_and_open_page
+     #byebug
+     expect(page).to have_content "taskname1"
+     expect(page).to have_content "label1"
+      #save_and_open_page
+      expect(page).to have_content "taskname2"
+      expect(page).to have_content "label1"
+   end
+
+   scenario "ラベルとステータスで検索すると、両方に合致する検索結果が出るかテスト" do
+     visit tasks_path
+
+     select "label1", from: "task_label_id"
+     select "未着手", from: "task_task_status"
+      #save_and_open_page
+
+     click_button "検索する"
+
+     expect(page).to have_content "label1"
+     expect(page).to have_content "未着手"
      #save_and_open_page
    end
 end

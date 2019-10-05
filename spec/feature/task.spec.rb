@@ -8,9 +8,9 @@ background do
 
   @label = FactoryBot.create(:label)
 
-   @task = FactoryBot.create(:task, user_id: @user.id)
-   @second_task = FactoryBot.create(:second_task, user_id: @user.id)
-   @third_task= FactoryBot.create(:third_task, user_id: @second_user.id)
+  @task = FactoryBot.create(:task, user_id: @user.id,label_ids: @label.id)
+  @second_task = FactoryBot.create(:second_task, user_id: @user.id)
+  @third_task= FactoryBot.create(:third_task, user_id: @second_user.id)
 
    visit new_session_path
 
@@ -157,7 +157,7 @@ end
     #save_and_open_page
    end
 
-   scenario "タスク登録時にラベルも登録できるか" do
+   scenario "タスク登録時にラベルも登録できるかのテスト" do
      visit new_task_path
 #save_and_open_page
 
@@ -174,4 +174,17 @@ end
      #save_and_open_page
    end
 
+   scenario "ラベルとタスク名で検索すると、両方に合致する検索結果が出るかのテスト" do
+     visit tasks_path
+
+     fill_in "task[task_name]", with: "taskname1"
+     select "label1", from: "task_label_id"
+      #save_and_open_page
+
+     click_button "検索する"
+
+     expect(page).to have_content "taskname1"
+     expect(page).to have_content "label1"
+     #save_and_open_page
+   end
 end

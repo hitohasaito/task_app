@@ -9,6 +9,7 @@ class TasksController < ApplicationController
   end
 
   def create
+    #binding.pry
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if @task.save
@@ -20,6 +21,7 @@ class TasksController < ApplicationController
   end
 
   def index
+    #binding.pry
     @task_new = Task.new
     if params[:sort_expired]
       @tasks = Task.page(params[:page]).per(PER).order(:task_limit)
@@ -36,9 +38,36 @@ class TasksController < ApplicationController
     end
 
     if params[:task]
-      @tasks = Task.page(params[:page]).per(PER).get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
-    else
-      Task.page(params[:page]).per(PER).order(created_at: :desc)
+      #binding.pry
+      if  params[:task][:label_id].empty?
+        @tasks = Task.page(params[:page]).per(PER).get_task(params[:task][:task_name]).get_status(params[:task][:task_status])
+
+      elsif params[:task][:task_name] && params[:task][:label_id].present?#タスク名とラベルが検索条件にあったら、ラベル名とタスク名(部分一致可)に合った結果を返す
+          tasks = Task.get_task_and_label(
+            task_name: params[:task][:task_name],
+            label_id: params[:task][:label_id]
+          )
+        @tasks = Kaminari.paginate_array(tasks).page(params[:page]).per(PER)
+
+      elsif params[:task][:task_name] && params[:task][:task_status]&& params[:task][:label_id].present?#タスク名、ラベル、ステータスの項目が検索条件にあったら
+        tasks = Task.get_task_and_status_and_label(
+          task_name: params[:task][:task_name],
+          label_id: params[:task][:label_id],
+          task_status: params[:task][:task_status]
+        )
+        @tasks = Kaminari.paginate_array(tasks).page(params[:page]).per(PER)
+
+      elsif params[:task][:task_status] && params[:task][:label_id].present?#ステータスとラベルが検索条件にあったら
+        task = Labelling
+        .where(label_id:params[:task][:label_id])
+        .pluck(:task_id)
+        .map { |task_id| Task.find(task_id) }
+        .select { |t| t.task_status == params[:task][:task_status]}
+        @tasks = Kaminari.paginate_array(task).page(params[:page]).per(PER)
+
+      else
+          @tasks = Task.page(params[:page]).per(PER).order(created_at: :desc)
+      end
     end
   end
 
@@ -66,7 +95,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority)
+    params.require(:task).permit(:task_name, :task_body, :task_limit, :task_status, :task_priority, label_ids: [])
   end
 
   def find_params

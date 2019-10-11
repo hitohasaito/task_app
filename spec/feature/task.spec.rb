@@ -222,18 +222,16 @@ end
    end
    scenario "タスク名、ラベル、ステータスの3つに該当する捨検索結果が出るかテスト" do
      visit tasks_path
-
-　　　fill_in "task[task_name]", with: "taskname1"
+#save_and_open_page
+     fill_in "task[task_name]", with: "name1"
      select "label1", from: "task_label_id"
      select "未着手", from: "task_task_status"
-
-      #save_and_open_page
 
      click_button "検索する"
 
      expect(page).to have_content "taskname1"
      expect(page).to have_content "未着手"
      expect(page).to have_content "label1"
-     #save_and_open_page
+     save_and_open_page
    end
 end

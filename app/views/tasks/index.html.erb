@@ -11,7 +11,7 @@
   <%= f.label :task_status %>
   <%= f.select :task_status, ["未着手","着手中","完了"],include_blank: true%>
 
-  <%= f.label :label %>
+  <%= f.label :label_name, "ラベル名" %>
   <%= f.select :label_id, Label.pluck(:label_name,:id),include_blank: true %>
 
   <%= f.submit "検索する"%>

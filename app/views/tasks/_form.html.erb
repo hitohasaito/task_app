@@ -29,7 +29,7 @@
   <%= f.select:task_priority, Task.task_priorities.keys, selected:Task.task_priorities[@task.task_priority] %>
 </div>
 <div>
-  <%= f.label:label %>
+  <%= f.label:label_name, "ラベル名" %>
   <% Label.all.each do |label| %>
     <%= f.check_box :label_ids,{multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false },label[:id] %>
     <%= label.label_name %>
